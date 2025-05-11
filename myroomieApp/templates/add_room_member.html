@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block title %}
+  Add Room Member
+{% endblock title %}
+
+{% block sidebar %}
+  <aside
+    id="sidebar-content"
+    class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-[#fdfaf5] border-r border-gray-200 sm:translate-x-0"
+    aria-label="Sidebar"
+    >
+    <div class="h-full px-3 pb-4 overflow-y-auto bg-white">
+    <ul class="space-y-2 font-medium mb-4">
+        <li class="flex justify-between items-center p-2 px-4 rounded-lg bg-[#b7b1f1]">
+            <h3 class="text-white">
+                สมาชิก
+            </h3>             
+        </li>
+        {% for member in member %}
+        <li>
+            <a
+                href="#"
+                class="flex items-center p-2 text-[#575042] rounded-lg hover:bg-gray-100"
+            >
+                <span class="ms-3">{{ member.member.username }}</span>
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+
+    </div>
+    </aside>
+{% endblock sidebar %}
+
+{% block main-content %}
+    <div class="p-4 sm:ml-64 px-18">
+        <div class="bg-[#fdfaf5] p-4 px-6 border-2 border-gray-200 rounded-lg mt-24">
+            <h1 class="text-xl text-[#575042] font-semibold flex justify-center">{{ room.room_name }}</h1>
+     
+            <div class="mt-6 px-8 text-[#575042] py-6">
+                <form action="" method="post"
+                class="flex justify-between">
+                    {% csrf_token %}
+                    {% for fm in form %}
+                        <div>
+                            {{ fm }}
+                        </div>
+                    {% endfor %}
+                    <button type="submit">เพิ่ม</button>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+{% endblock main-content %}

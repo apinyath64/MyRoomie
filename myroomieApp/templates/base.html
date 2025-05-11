@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Itim&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Yaldevi:wght@200..700&display=swap"
+      rel="stylesheet"
+    />
+    <title>My Roomie | {% block title %}{% endblock title %}</title>
+  </head>
+  <body class="font-[Kanit] bg-[#b7b1f1]">
+    <nav
+      class="fixed top-0 z-50 w-full bg-[#fdfaf5] border-b border-gray-200 px-8"
+    >
+      <div class="px-3 py-3 lg:px-5 lg:pl-3">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center justify-start rtl:justify-end">
+            <button
+              data-drawer-target="logo-sidebar"
+              data-drawer-toggle="logo-sidebar"
+              aria-controls="logo-sidebar"
+              type="button"
+              class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+            >
+              <span class="sr-only">Open sidebar</span>
+              <svg
+                class="w-6 h-6"
+                aria-hidden="true"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  clip-rule="evenodd"
+                  fill-rule="evenodd"
+                  d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
+                ></path>
+              </svg>
+            </button>
+            <a href="{% url 'home' %}" class="flex ms-2 md:me-24">
+              <span
+                class="self-center text-xl text-[#b7b1f1] font-bold sm:text-2xl whitespace-nowrap"
+                >My Roomie</span
+              >
+            </a>
+          </div>
+          <div class="flex items-center">
+            <div class="flex items-center ms-3 gap-8">
+                <a href="{% url 'create_chat_room' %}" class="flex gap-1.5">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#b7b1f1" viewBox="0 0 448 512"><path d="M64 32C28.7 32 0 60.7 0 96L0 416c0 35.3 28.7 64 64 64l320 0c35.3 0 64-28.7 64-64l0-320c0-35.3-28.7-64-64-64L64 32zM200 344l0-64-64 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l64 0 0-64c0-13.3 10.7-24 24-24s24 10.7 24 24l0 64 64 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-64 0 0 64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"/></svg>
+                    <span class="text-[#b7b1f1]">สร้างห้อง</span>
+                </a>
+                <div class="profile-btn">
+                    <button
+                      type="button"
+                      onclick="openProfile()"
+                      class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+                      aria-expanded="false"
+                      data-dropdown-toggle="dropdown-user"
+                      data-dropdown-placement="bottom"
+                    >
+                      <span class="sr-only">Open user menu</span>
+                      <img
+                        class="w-11 h-11 rounded-full"
+                        src="https://i.pinimg.com/736x/4e/e2/73/4ee273f5aba1f6d50470bd454f7728df.jpg"
+                        alt="user photo"
+                      />
+                    </button>
+                  </div>
+              <div
+                id="profile-content"
+                class="z-50 hidden my-4 absolute top-full right-0 text-base list-none bg-white divide-y divide-gray-100 rounded-sm shadow-sm"
+              >
+                <div class="px-4 py-3" role="none">
+                  <p class="text-sm text-gray-900 dark:text-white" role="none">
+                    {{ request.user.username }}
+                  </p>
+                  <p
+                    class="text-sm font-medium text-gray-900 truncate dark:text-gray-300"
+                    role="none"
+                  >
+                    {{ request.user.email }}
+                  </p>
+                 
+                </div>
+                <ul class="py-1" role="none">
+                  <li>
+                    <a
+                      href="{% url 'profile' user_id=request.user.id username=request.user.username  %}"
+                      class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                      role="menuitem"
+                      >Profile
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="{% url 'logout' %}"
+                      class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                      role="menuitem"
+                      >Logout</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    {% block sidebar %}
+    {% endblock sidebar %}
+    
+    {% block main-content %}
+    {% endblock main-content %}
+    
+    
+  </body>
+  <script>
+    function openProfile() {
+      document.getElementById("profile-content").classList.toggle("hidden");
+    }
+
+    document.addEventListener("mousedown", function (event) {
+      const profileBtn = document.querySelector(".profile-btn");
+      const profileDropdown = document.getElementById("profile-content");
+      if (
+        !profileBtn.contains(event.target) &&
+        !profileDropdown.contains(event.target)
+      ) {
+        profileDropdown.classList.add("hidden");
+      }
+    });
+  </script>
+</html>

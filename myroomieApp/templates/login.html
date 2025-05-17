@@ -4,14 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Itim&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Yaldevi:wght@200..700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Itim&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Yaldevi:wght@200..700&display=swap"
+      rel="stylesheet"
+    />
     <title>Sign In</title>
 </head>
 <body class="font-[Kanit]">
     
-    <nav class="fixed top-0 z-50 w-full bg-[#CB9DF0] border-b border-gray-200">
+    <nav class="fixed top-0 z-50 w-full bg-[#b7b1f1] border-b border-gray-200">
         <div class="px-3 py-3 lg:px-5 lg:pl-3">
         <div class="flex items-center justify-between">
             <div class="flex items-center justify-start rtl:justify-end">
@@ -32,7 +35,7 @@
         </div>
     </nav>
   
-    <section class="bg-purple-50 mt-12">
+    <section class="bg-[#fdfaf5] mt-12">
         <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
             
             <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0">
@@ -53,7 +56,7 @@
                             
                         {% endfor %}
                         
-                        <button type="submit" class="w-full text-white bg-purple-400 hover:bg-purple-500 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Login</button>
+                        <button type="submit" class="w-full bg-[#FF90BB] text-white hover:bg-pink-400 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Login</button>
                         <p class="text-sm font-light text-gray-500 dark:text-gray-400">
                             Don't have any account? <a href="{% url 'signup' %}" class="font-medium text-blue-600 hover:underline">Create an account</a>
                         </p>

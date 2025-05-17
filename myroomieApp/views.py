@@ -6,7 +6,18 @@ from django.contrib.auth import login, logout
 
 def home(request):
     rooms = Room.objects.all()
-    return render(request, 'index.html', {'rooms': rooms})
+    user = request.user
+    try:
+        profile = Profile.objects.get(user=user)
+    except Profile.DoesNotExist:
+        profile = None
+    
+    context = {
+        'rooms': rooms,
+        'profile': profile
+    }
+    return render(request, 'index.html', context)
+
 
 class SignUpView(View):
     def get(self, request):
@@ -91,26 +102,48 @@ def message_view(request, room_id, room_name, username):
     get_messages = Message.objects.filter(room=get_room)
     room_members = RoomMember.objects.filter(room=room_id)
 
+    room = get_object_or_404(Room, pk=room_id)
+    user = request.user
+    try:
+        profile = Profile.objects.get(user=user)
+    except Profile.DoesNotExist:
+        profile = None
+
+    member_profile = []
+    for member in room_members:
+        try:
+            p = Profile.objects.get(user=member.member)
+        except Profile.DoesNotExist:
+            p = None
+
+        member_profile.append({
+            'user': member.member,
+            'member_profile': p 
+        })
+
     context = {
         'room_id': room_id, 
         'room_name': room_name,
         'messages': get_messages,
         'user': username,
-        'members': room_members
+     
+        'room': room,
+        'profile': profile,
+        'member_profile': member_profile
     }
     return render(request, 'message.html', context)
 
 
-def room_member(request, room_id):
-    get_room = Room.objects.get(pk=room_id)
-    get_members = RoomMember.objects.filter(room=get_room)
+# def room_member(request, room_id):
+#     get_room = Room.objects.get(pk=room_id)
+#     get_members = RoomMember.objects.filter(room=get_room)
 
-    context = {
-        'room': get_room,
-        'members': get_members
-    }
+#     context = {
+#         'room': get_room,
+#         'members': get_members
+#     }
 
-    return render(request, 'room_details.html', context)
+#     return render(request, 'room_details.html', context)
 
 
 def add_room_member(request, room_id, username):
@@ -122,7 +155,7 @@ def add_room_member(request, room_id, username):
             member = RoomMember.objects.filter(room=room_id)
             member = form.cleaned_data['member']
             RoomMember.objects.create(room=room, member=member)
-            return redirect('room', room_id=room_id, room_name=room.room_name, username=username )
+            return redirect('room', room_id=room_id, room_name=room.room_name, username=username)
         
     context = {
         'room': room,
@@ -132,6 +165,19 @@ def add_room_member(request, room_id, username):
     return render(request, 'add_room_member.html', context)
 
 
+def change_status(request, room_id):
+    room = Room.objects.get(pk=room_id)
+    username = request.user.username
+
+    if request.method == 'POST':
+        statusform = ChangeRoomStatusForm(request.POST, instance=room)
+        if statusform.is_valid():
+            # room.status = statusform.cleaned_data['status']
+            statusform.save()
+    return redirect('room', room_id=room_id, room_name=room.room_name, username=username)
+    
+
+        
 
 
 

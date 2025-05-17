@@ -66,11 +66,11 @@
                       <span class="sr-only">Open user menu</span>
                       <img
                         class="w-11 h-11 rounded-full"
-                        src="https://i.pinimg.com/736x/4e/e2/73/4ee273f5aba1f6d50470bd454f7728df.jpg"
+                        src="{{ profile.image.url }}"
                         alt="user photo"
                       />
                     </button>
-                  </div>
+                </div>
               <div
                 id="profile-content"
                 class="z-50 hidden my-4 absolute top-full right-0 text-base list-none bg-white divide-y divide-gray-100 rounded-sm shadow-sm"
@@ -118,9 +118,7 @@
     {% block main-content %}
     {% endblock main-content %}
     
-    
-  </body>
-  <script>
+    <script>
     function openProfile() {
       document.getElementById("profile-content").classList.toggle("hidden");
     }
@@ -135,5 +133,9 @@
         profileDropdown.classList.add("hidden");
       }
     });
-  </script>
+    </script>
+    <script src="https://unpkg.com/flowbite@1.6.5/dist/flowbite.min.js"></script>
+
+    
+  </body>
 </html>

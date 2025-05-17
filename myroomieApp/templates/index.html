@@ -22,13 +22,25 @@
       </li>
 
       {% for room in rooms %}
-      <li>
+      <li class="flex justify-between">
         <a
           href="{% url 'room' room.id room.room_name user %}"
           class="flex items-center p-2 text-[#575042] rounded-lg hover:bg-gray-100"
         >
           <span class="ms-3">{{ room.room_name }}</span>
         </a>
+        <div class="flex items-center p-2">
+          <!-- <p class="text-[#575042] test-xs">{{ room.get_status_display }}</p> -->
+            {% if room.status == 'A' %}
+            <img width="24" height="24" src="https://img.icons8.com/forma-bold-filled/24/40C057/circled.png" alt="circled"/>
+            {% elif room.status == 'CH'%}
+            <img width="24" height="24" src="https://img.icons8.com/external-claro-amoghdesign/32/external-wine-claro-christmas-claro-amoghdesign.png" alt="external-wine-claro-christmas-claro-amoghdesign"/>
+            {% elif room.status == 'D' %}
+            <img width="24" height="24" src="https://img.icons8.com/color/48/do-not-disturb.png" alt="do-not-disturb"/>
+            {% elif room.status == 'S' %}
+            <img width="24" height="24" src="https://img.icons8.com/ios-glyphs/30/sleep.png" alt="sleep"/>
+            {% endif %}
+        </div>
       </li>
       {% endfor %}
     </ul>

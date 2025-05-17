@@ -46,4 +46,10 @@ class AddRoomMember(forms.ModelForm):
     class Meta:
         model = RoomMember
         fields = ['member']
-    
+
+
+class ChangeRoomStatusForm(forms.ModelForm):
+    # status = forms.CharField(widget=forms.Select(attrs={'class': 'bg-gray-50 border border-gray-300 text-[#575042] text-sm rounded-lg focus:ring-gray-600 focus:border-gray-600 block w-full p-2.5'}))
+    class Meta:
+        model = Room
+        fields = ['status']

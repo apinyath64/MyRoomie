@@ -20,20 +20,18 @@ class SignInForm(AuthenticationForm):
 
 
 class ChatRoomForm(forms.ModelForm):
-    room_name = forms.CharField(label="ชื่อห้อง", widget=forms.TextInput(attrs={'class': 'bg-gray-50 border border-gray-300 text-[#575042] text-sm rounded-lg focus:ring-gray-600 focus:border-gray-600 block w-full p-2.5'}))
+    room_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'bg-gray-50 border border-gray-300 text-[#575042] text-sm rounded-lg focus:ring-gray-600 focus:border-gray-600 block w-full p-2.5'}))
     
     class Meta:
         model = Room
-        fields = ['room_name', 'status']
-
-        labels = {
-            'status': 'สถานะ',
-            
-        }
+        fields = ['room_name', 'status', 'is_private']
+        
         widgets = {
-            'status': forms.Select(attrs={'class': 'bg-gray-50 border border-gray-300 text-[#575042] text-sm rounded-lg focus:ring-gray-600 focus:border-gray-600 block w-full p-2.5'})
+            'status': forms.Select(attrs={'class': 'bg-gray-50 border border-gray-300 text-[#575042] text-sm rounded-lg focus:ring-gray-600 focus:border-gray-600 block w-full p-2.5'}),
+            'is_private': forms.CheckboxInput(attrs={'class': 'ml-4 mb-2'})
         }
     
+
 
 class ProfileSettingForm(forms.ModelForm):
     class Meta:
@@ -52,4 +50,5 @@ class ChangeRoomStatusForm(forms.ModelForm):
     # status = forms.CharField(widget=forms.Select(attrs={'class': 'bg-gray-50 border border-gray-300 text-[#575042] text-sm rounded-lg focus:ring-gray-600 focus:border-gray-600 block w-full p-2.5'}))
     class Meta:
         model = Room
-        fields = ['status']
+        fields = ['status', 'is_private']
+

@@ -1,0 +1,65 @@
+{% extends 'base.html' %} 
+{% block title %} Confirm Delete Room {% endblock title %} 
+
+{%block main-content %}
+<div class="p-4 px-18">
+  <div
+    class="bg-[#fdfaf5] p-4 px-12 border-2 border-[#fdfaf5] rounded-lg mt-24"
+  >
+    <h1 class="text-xl font-semibold flex justify-center text-[#575042]">
+      ยืนยันการลบห้องแชท
+    </h1>
+    <div class="mt-8 flex flex-col px-8">
+      <div class="relative overflow-x-auto">
+        <table
+          class="w-full text-sm text-left rtl:text-right text-[#575042]"
+        >
+          <thead
+            class="text-medium text-[#575042] bg-gray-50"
+          >
+            <tr>
+              <th scope="col" class="px-6 py-3">ห้อง</th>
+              <th scope="col" class="px-6 py-3">ความเป็นส่วนตัว</th>
+              <th scope="col" class="px-6 py-3">จำนวนสมาชิก</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              class="bg-white border-b border-gray-200"
+            >
+              <th
+                scope="row"
+                class="px-6 py-4 font-medium text-[#575042] whitespace-nowrap"
+              >
+                {{ room_details.room_name }}
+              </th>
+              <td class="px-6 py-4">
+                {% if room_details.is_private %}
+                <svg class="w-6 h-6" fill="#575042" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M144 144l0 48 160 0 0-48c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192l0-48C80 64.5 144.5 0 224 0s144 64.5 144 144l0 48 16 0c35.3 0 64 28.7 64 64l0 192c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 256c0-35.3 28.7-64 64-64l16 0z"/></svg>
+                {% else %}
+                <svg class="w-6 h-6" fill="#575042" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M352 144c0-44.2 35.8-80 80-80s80 35.8 80 80l0 48c0 17.7 14.3 32 32 32s32-14.3 32-32l0-48C576 64.5 511.5 0 432 0S288 64.5 288 144l0 48L64 192c-35.3 0-64 28.7-64 64L0 448c0 35.3 28.7 64 64 64l320 0c35.3 0 64-28.7 64-64l0-192c0-35.3-28.7-64-64-64l-32 0 0-48z"/></svg>
+                {% endif %}
+              </td>
+              <td class="px-6 py-4">12</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="text-md font-bold text-[#575042] mt-6 mb-2">คุณต้องการลบห้องนี้?</p>
+      <div class="flex justify-between text-[#575042]">
+        <p class="text-red-400">Note: หากคุณยืนยันการลบแล้ว จะไม่สามารถกู้คืนห้องแชทได้</p>
+        <div class="flex gap-6">
+          <form action="{% url 'delete_room' room_id=room_details.id %}" method="post">  
+            {% csrf_token %}
+            <button class="p-1.5 rounded px-2 bg-red-500 text-white hover:bg-red-600">ยืนยัน</button>
+          </form>
+
+          <a href="{% url 'home' %}" class="p-1.5 rounded px-2 hover:underline">ย้อนกลับ</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock main-content %}

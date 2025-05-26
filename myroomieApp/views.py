@@ -12,6 +12,11 @@ def home(request):
     user = request.user
     room_member_request = MemberRequest.objects.all()
 
+    if request.user.is_authenticated:
+        unread_notifications = Notification.objects.filter(user=user, is_read=False).count()
+    else:
+        0
+
     try:
         profile = Profile.objects.get(user=user)
     except Profile.DoesNotExist:
@@ -24,7 +29,8 @@ def home(request):
         'rooms': rooms,
         'profile': profile,
         'member_room_ids': member_room_ids,
-        'room_member_request': room_member_request
+        'room_member_request': room_member_request,
+        'unread_notifications': unread_notifications
         
 
     }
@@ -114,15 +120,18 @@ def create_chat_room(request):
     return render(request, 'create_chat_room.html', {'form': form, 'profile': profile})
 
 def room_confirm_delete(request, room_id):
-    room_details = get_object_or_404(Room, id=room_id, user=request.user)
+    room = get_object_or_404(Room, id=room_id, user=request.user)
+    room_member = RoomMember.objects.filter(room=room).count()
 
-    if request.user != room_details.user:
+    if request.user != room.user:
         redirect('home')
 
     context = {
-        'room_details': room_details
+        'room': room,
+        'room_member': room_member
     }
     return render(request, 'room_confirm_delete.html', context)
+
 
 def delete_room(request, room_id):
     room = get_object_or_404(Room, id=room_id)
@@ -224,7 +233,7 @@ def remove_member(request):
 
 
 def notification(request):
-    user_notification = Notification.objects.filter(user=request.user, is_read=False)
+    user_notification = Notification.objects.filter(user=request.user)
     try:
         profile = Profile.objects.get(user=request.user)
     except Profile.DoesNotExist:
@@ -236,6 +245,18 @@ def notification(request):
         
     }
     return render(request, 'notification.html', context)
+
+def delete_notification(request, notify_id):
+    if request.method == 'POST':
+        notification  = Notification.objects.filter(id=notify_id, user=request.user)
+        notification.delete()
+        return redirect('notification')
+
+
+def mark_notifications_as_read(request):
+    notifications = Notification.objects.filter(user=request.user, is_read=False).update(is_read=True)
+    return redirect('notification')
+
         
 
 def member_request(request, room_id):
